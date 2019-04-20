@@ -17,7 +17,7 @@ class CreateCartTable extends Migration
             $table->bigIncrements('id_cart');
             $table->unsignedBigInteger('id_user');
             $table->float('total_amount');
-            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();
         });
     }

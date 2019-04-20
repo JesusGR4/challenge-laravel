@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
+
+    /**
+     * Controller where an user can sign up in platform
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function signup(Request $request){
 
         $request->validate([ 'name'     => 'required|string',
@@ -26,6 +32,11 @@ class AuthController extends Controller
             'message' => 'Usuario creado correctamente'], 200);
     }
 
+    /**
+     * Controller where an user logs in platform
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -58,6 +69,11 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Controller where an user logs out in platform
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();

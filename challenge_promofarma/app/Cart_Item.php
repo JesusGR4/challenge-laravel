@@ -22,11 +22,6 @@ class Cart_Item extends Model
     protected $table = "carts_items";
 
 
-    /**
-     * Set the real Primary key
-     * @var string
-     */
-    protected $primaryKey = ['id_cart', 'id_product', 'id_seller'];
 
     /**
      * Get related cart

@@ -43,12 +43,12 @@ class ProductController extends Controller
             return response()->json([
                 'message' => 'Nothing to change'], 401);
         }
-        $seller = Product::find($request->id_product);
-        if(!$seller){
+        $product = Product::find($request->id_product);
+        if(!$product){
             return response()->json([
                 'message' => 'Product not found'], 401);
         }
-        $seller->update($attrs);
+        $product->update($attrs);
 
         return response()->json(['message' =>
             'Successfully product update']);

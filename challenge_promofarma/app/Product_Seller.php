@@ -21,13 +21,6 @@ class Product_Seller extends Model
      */
     protected $table = "products_sellers";
 
-
-    /**
-     * Set the real Primary key
-     * @var string
-     */
-    protected $primaryKey = ['id_product', 'id_seller'];
-
     /**
      * Get related product
      */
@@ -39,6 +32,6 @@ class Product_Seller extends Model
      * Get related seller
      */
     public function seller(){
-        return $this->hasOne('App\Seler', 'id_seller');
+        return $this->hasOne('App\Seller', 'id_seller');
     }
 }

@@ -14,13 +14,13 @@ class CreateOrdersItemsTable extends Migration
     public function up()
     {
         Schema::create('orders_items', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('id_order');
             $table->unsignedBigInteger('id_seller');
             $table->unsignedBigInteger('id_product');
             $table->float('amount');
             $table->float('cost');
             $table->integer('quantity');
-            $table->primary(array('id_order', 'id_seller', 'id_product'));
             $table->foreign('id_order')->references('id_order')->on('orders');
             $table->foreign('id_seller')->references('id_seller')->on('sellers');
             $table->foreign('id_product')->references('id_product')->on('products');

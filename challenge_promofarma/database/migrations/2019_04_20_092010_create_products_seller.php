@@ -14,13 +14,13 @@ class CreateProductsSeller extends Migration
     public function up()
     {
         Schema::create('products_sellers', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('id_product');
             $table->unsignedBigInteger('id_seller');
             $table->integer('stock');
             $table->boolean('status');
             $table->float('amount');
             $table->float('cost');
-            $table->primary(array('id_product', 'id_seller'));
             $table->foreign('id_seller')->references('id_seller')->on('sellers');
             $table->foreign('id_product')->references('id_product')->on('products');
             $table->timestamps();

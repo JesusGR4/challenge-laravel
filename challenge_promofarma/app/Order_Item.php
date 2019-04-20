@@ -21,13 +21,6 @@ class Order_Item extends Model
      */
     protected $table = "orders_items";
 
-
-    /**
-     * Set the real Primary key
-     * @var string
-     */
-    protected $primaryKey = ['id_order', 'id_seller', 'id_product'];
-
     /**
      * Get related order
      */

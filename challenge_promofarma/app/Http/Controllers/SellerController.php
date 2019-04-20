@@ -63,8 +63,6 @@ class SellerController extends Controller
         $result = Seller::disableSeller($request->id_seller);
         return response()->json([
             'message' => $result['message']], $result['code']);
-
-
     }
 
 }

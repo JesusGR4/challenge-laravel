@@ -34,4 +34,12 @@ class Product extends Model
     public function productSellers(){
         return $this->hasMany("App\Product_Seller", "id_product");
     }
+
+    /**
+     * We are going to set as 0 product status and we are going to disable all related products
+     * @var string
+     */
+    public static function disableProduct($idProduct){
+
+    }
 }

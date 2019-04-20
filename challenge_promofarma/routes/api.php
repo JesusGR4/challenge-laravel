@@ -35,3 +35,10 @@ Route::group(['prefix' => 'seller'], function(){
     Route::post('update', 'SellerController@update');
     Route::post('delete', 'SellerController@delete');
 });
+
+Route::group(['prefix' => 'product'], function(){
+    // SELLER
+    Route::post('create', 'ProductController@create');
+    Route::post('update', 'ProductController@update');
+    Route::post('delete', 'ProductController@delete');
+});

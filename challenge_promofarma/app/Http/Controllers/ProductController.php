@@ -65,9 +65,14 @@ class ProductController extends Controller
             return response()->json([
                 'message' => 'Id product needed'], 401);
         }
-
-        $result = Product::disableProduct($request->id_product);
+        $product = Product::find($request->id_product);
+        if(!$product){
+            return response()->json([
+                'message' => 'Product not found'], 401);
+        }
+        $product->update(['status' => false]);
+        Product::disableProduct($request->id_product);
         return response()->json([
-            'message' => $result['message']], $result['code']);
+            'message' => 'Product disabled'], 400);
     }
 }

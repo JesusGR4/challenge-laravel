@@ -70,4 +70,22 @@ class ProductSellerController extends Controller
             'Successfully provision update']);
     }
 
+    /**
+     * Controller where a provision is deleted
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete(Request $request){
+
+        $productSeller = Product_Seller::exists($request);
+        if(!$productSeller){
+            return response()->json([
+                'message' => 'Provision does not exist, please create it'], 401);
+        }
+        $productSeller->update(['status' => false]);
+
+        return response()->json(['message' =>
+            'Successfully provision deleted']);
+    }
+
 }

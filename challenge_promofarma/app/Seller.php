@@ -40,6 +40,6 @@ class Seller extends Model
      * @var string
      */
     public static function disableSeller($idSeller){
-
+        Product_Seller::where('id_seller', $idSeller)->update(['status' => false]);
     }
 }

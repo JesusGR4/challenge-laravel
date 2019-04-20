@@ -26,34 +26,39 @@ class ProductController extends Controller
             'message' => 'Successfully product created'], 200);
     }
 
+    /**
+     * Controller where a product is updated
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request){
 
         $request->validate([
             'name'       => 'string',
         ]);
 
-        $attrs = [];
-
         if(!$request->has('id_product')){
             return response()->json([
                 'message' => 'Id product needed'], 401);
         }
-        if($request->has('name')) $attrs['name'] = $request->input('name');
-        if(empty($attrs)){
-            return response()->json([
-                'message' => 'Nothing to change'], 401);
-        }
+
         $product = Product::find($request->id_product);
         if(!$product){
             return response()->json([
                 'message' => 'Product not found'], 401);
         }
-        $product->update($attrs);
+        $product->update($request->all());
 
         return response()->json(['message' =>
             'Successfully product update']);
     }
 
+
+    /**
+     * Controller where a product and all related provisions are disabled
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete(Request $request){
 
         if(!$request->has('id_product')){

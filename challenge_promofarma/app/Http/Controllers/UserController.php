@@ -42,15 +42,8 @@ class UserController extends Controller
             'password'    => 'string',
         ]);
         $user = Auth::user();
-        $attrs = [];
-        if($request->has('email')) $attrs['email'] = $request->input('email');
-        if($request->has('password')) $attrs['password'] = bcrypt($request->input('password'));
-        if($request->has('name')) $attrs['name'] = $request->input('name');
-        if(empty($attrs)){
-            return response()->json([
-                'message' => 'Nothing to change'], 401);
-        }
-        $user->update($attrs);
+
+        $user->update($request->all());
         return response()->json(['message' =>
             'Successfully user update']);
     }

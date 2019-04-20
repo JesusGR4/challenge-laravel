@@ -21,25 +21,14 @@ class ProductSellerController extends Controller
             'cost'     => 'required|numeric|min:0.0',
         ]);
 
-        if(!$request->has('id_product')){
-            return response()->json([
-                'message' => 'Id product needed'], 401);
+        $result = Product_Seller::checkFields($request);
+        if($result !== true){
+            return $result;
         }
-        if(!$request->has('id_seller')){
+        if(Product_Seller::exists($request)){
             return response()->json([
-                'message' => 'Id seller needed'], 401);
+                'message' => 'Provision already exists, please update it'], 401);
         }
-        if(!Product::find($request->id_product)){
-            return response()->json([
-                'message' => 'Product not found'], 401);
-        }
-
-        if(!Seller::find($request->id_seller)){
-            return response()->json([
-                'message' => 'Seller not found'], 401);
-        }
-        var_dump($request->all());
-        die;
         $product = new Product_Seller(['stock'     => $request->stock,
             'amount' => $request->amount,
             'cost'   => $request->cost,
@@ -52,4 +41,33 @@ class ProductSellerController extends Controller
         return response()->json([
             'message' => 'Successfully product created'], 200);
     }
+
+
+    /**
+     * Controller where a provision is updated
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request){
+
+        $request->validate([ 'stock'     => 'integer|min:0',
+            'amount'     => 'numeric|min:0.0',
+            'cost'     => 'numeric|min:0.0',
+        ]);
+
+        $result = Product_Seller::checkFields($request);
+        if($result !== true){
+            return $result;
+        }
+        $productSeller = Product_Seller::exists($request);
+        if(!$productSeller){
+            return response()->json([
+                'message' => 'Provision does not exist, please create it'], 401);
+        }
+        $productSeller->update($request->all());
+
+        return response()->json(['message' =>
+            'Successfully provision update']);
+    }
+
 }

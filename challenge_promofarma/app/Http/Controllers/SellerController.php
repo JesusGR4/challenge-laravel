@@ -26,34 +26,38 @@ class SellerController extends Controller
             'message' => 'Successfully seller created'], 200);
     }
 
+    /**
+     * Controller where a Seller is updated
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request){
 
         $request->validate([
             'name'       => 'string',
         ]);
 
-        $attrs = [];
-
         if(!$request->has('id_seller')){
             return response()->json([
                 'message' => 'Id seller needed'], 401);
         }
-        if($request->has('name')) $attrs['name'] = $request->input('name');
-        if(empty($attrs)){
-            return response()->json([
-                'message' => 'Nothing to change'], 401);
-        }
+
         $seller = Seller::find($request->id_seller);
         if(!$seller){
             return response()->json([
                 'message' => 'Seller not found'], 401);
         }
-        $seller->update($attrs);
+        $seller->update($request->all());
 
         return response()->json(['message' =>
             'Successfully user update']);
     }
 
+    /**
+     * Controller where a seller and all related provision are disabled
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete(Request $request){
         if(!$request->has('id_seller')){
             return response()->json([

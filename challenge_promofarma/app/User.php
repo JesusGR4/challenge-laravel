@@ -38,8 +38,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get related Carts
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cart(){
+        return $this->hasMany('App\Cart');
+    }
 
+    /**
+     * Check if user is active
+     * @return bool
+     */
     public function userAvailable(){
         return $this->status == 1;
     }
+
+
 }

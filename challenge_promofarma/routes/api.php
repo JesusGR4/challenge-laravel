@@ -14,12 +14,24 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['prefix' => 'auth'], function () {
+
+    // AUTH
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'UserController@signup');
 
+
+
+    // LOGGED CONTROLLERS
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'AuthController@logout');
         Route::post('update', 'UserController@update');
         Route::post('delete', 'UserController@delete');
     });
+});
+
+Route::group(['prefix' => 'seller'], function(){
+    // SELLER
+    Route::post('create', 'SellerController@create');
+    Route::post('update', 'SellerController@update');
+    Route::post('delete', 'SellerController@delete');
 });

@@ -36,6 +36,6 @@ class Order extends Model
     }
 
     public function cartItems(){
-        return $this->hasMany("App\Order_Item");
+        return $this->hasMany("App\Order_Item", "id_order");
     }
 }

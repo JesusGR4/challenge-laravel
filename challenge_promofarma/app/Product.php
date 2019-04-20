@@ -32,6 +32,6 @@ class Product extends Model
      * Get related product sellers
      */
     public function productSellers(){
-        return $this->hasMany("App\Product_Seller");
+        return $this->hasMany("App\Product_Seller", "id_product");
     }
 }

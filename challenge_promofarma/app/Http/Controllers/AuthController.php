@@ -70,6 +70,38 @@ class AuthController extends Controller
     }
 
     /**
+     * Controller where an user updates his info
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request){
+        $request->validate([
+            'email'       => 'string|email',
+            'password'    => 'string',
+        ]);
+        $user = Auth::user();
+        $attrs = [];
+        if($request->has('email')) $attrs['email'] = $request->input('email');
+        if($request->has('password')) $attrs['password'] = bcrypt($request->input('password'));
+        if($request->has('name')) $attrs['name'] = $request->input('name');
+        if(empty($attrs)){
+            return response()->json([
+                'message' => 'Nothing to change'], 401);
+        }
+        $user->update($attrs);
+        return response()->json(['message' =>
+            'Usuario correctamente actualizado']);
+    }
+
+    public function delete(Request $request){
+        $user = Auth::user();
+        $user->update(['status' => 0]);
+
+        return response()->json(['message' =>
+            'Usuario correctamente borrado']);
+    }
+
+    /**
      * Controller where an user logs out in platform
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

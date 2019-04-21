@@ -19,9 +19,7 @@ class CreateCartsItemsTable extends Migration
             $table->unsignedBigInteger('id_product');
             $table->unsignedBigInteger('id_seller');
             $table->integer('quantity');
-            $table->float('amount');
-            $table->boolean('status');
-            $table->foreign('id_cart')->references('id_cart')->on('carts');
+            $table->foreign('id_cart')->references('id_cart')->on('carts')->onDelete('cascade');
             $table->foreign('id_seller')->references('id_seller')->on('sellers');
             $table->foreign('id_product')->references('id_product')->on('products');
             $table->timestamps();

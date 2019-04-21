@@ -28,6 +28,17 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('delete', 'UserController@delete');
     });
 });
+Route::group(['prefix' => 'cart'], function () {
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::post('updateQuantity' , 'CartController@updateQuantity');
+        Route::post('deleteProduct' , 'CartController@deleteProduct');
+        Route::post('deleteCart', 'CartController@deleteCart');
+        Route::post('getSellerAmount','CartController@getSellerAmount');
+        Route::post('getAmountCart', 'CartController@getAmountCart');
+        Route::post('commitBuy', 'CartController@commitBuy');
+    });
+
+});
 
 Route::group(['prefix' => 'seller'], function(){
     // SELLER

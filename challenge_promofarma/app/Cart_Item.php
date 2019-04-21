@@ -12,7 +12,7 @@ class Cart_Item extends Model
      * @var array
      */
     protected $fillable = [
-        'id_cart', 'id_product', 'id_seller', 'amount', 'quantity'
+        'id_cart', 'id_product', 'id_seller', 'quantity'
     ];
 
     /**
@@ -45,6 +45,21 @@ class Cart_Item extends Model
      */
     public function product(){
         return $this->hasOne('App\Product', 'id_product');
+    }
+
+    /**
+     * @param $idProduct
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function deleteProduct($idProduct, $idCart){
+        $cartItem = Cart_Item::where('id_product', $idProduct)->where('id_cart', $idCart)->first();
+        if(!$cartItem){
+            return response()->json([
+                'message' => 'Item not found in cart'], 401);
+        }
+        $cartItem->delete();
+        return response()->json([
+            'message' => 'Item deleted'], 400);
     }
 
 }

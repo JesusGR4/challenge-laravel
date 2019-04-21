@@ -16,13 +16,13 @@ class UserController extends Controller
 
         $request->validate([ 'name'     => 'required|string',
             'email'    => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed',
+            'password' => 'required|string',
         ]);
 
         $user = new User(['name'     => $request->name,
             'email'    => $request->email,
             'password' => bcrypt($request->password),
-            'status'   => true]);
+            'status'   => User::active]);
 
         $user->save();
 
@@ -50,7 +50,7 @@ class UserController extends Controller
 
     public function delete(Request $request){
         $user = Auth::user();
-        $user->update(['status' => 0]);
+        $user->update(['status' => User::disabled]);
 
         return response()->json(['message' =>
             'Usuario correctamente borrado']);

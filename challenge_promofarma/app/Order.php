@@ -12,7 +12,7 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'total_amount'
+        'id_order', 'id_user'
     ];
 
     /**
@@ -35,7 +35,34 @@ class Order extends Model
         return $this->hasOne('App\User', 'id_user');
     }
 
-    public function cartItems(){
+    /**
+     * Get related items to order
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orderItems(){
         return $this->hasMany("App\Order_Item", "id_order");
     }
+
+    /**
+     * Insert order items by cart
+     * @param $idOrder
+     * @param $idUser
+     */
+    public static function insertOrderItems($idOrder, $idUser, $cartItems){
+
+        foreach($cartItems as $cartItem){
+            $idProduct = $cartItem->id_product;
+            $idSeller = $cartItem->id_seller;
+            $quantity = $cartItem->quantity;
+            $provisionInfo = Product_Seller::getPrices($idProduct, $idSeller);
+            $orderItem = new Order_Item(['id_order' => $idOrder,
+                'id_product' => $idProduct,
+                'id_seller' => $idSeller,
+                'amount' => $provisionInfo->amount*$quantity,
+                'cost' => $provisionInfo->cost*$quantity,
+                'quantity' => $quantity]);
+            $orderItem->save();
+        }
+    }
+
 }

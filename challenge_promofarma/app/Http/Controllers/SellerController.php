@@ -63,13 +63,14 @@ class SellerController extends Controller
             return response()->json([
                 'message' => 'Id seller needed'], 401);
         }
-        $seller = Seller::find($request->id_seller);
+        $idSeller = $request->id_seller;
+        $seller = Seller::find($idSeller);
         if(!$seller){
             return response()->json([
                 'message' => 'Seller not found'], 401);
         }
-        $seller->update(['status' => false]);
-        Seller::disableSeller($request->id_seller);
+        $seller->update(['status' => Seller::disabled]);
+        Seller::disableSeller($idSeller);
         return response()->json([
             'message' => 'Seller disabled'], 400);
     }

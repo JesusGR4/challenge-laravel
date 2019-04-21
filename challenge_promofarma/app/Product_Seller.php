@@ -21,6 +21,8 @@ class Product_Seller extends Model
      */
     protected $table = "products_sellers";
 
+    const disabled = 0;
+    const active = 1;
     /**
      * Get related product
      */
@@ -61,7 +63,28 @@ class Product_Seller extends Model
         return true;
     }
 
+    /**
+     * Check if the provision exists
+     * @param $request
+     * @return mixed
+     */
     public static function exists($request){
         return Product_Seller::where(['id_product' => $request->id_product, 'id_seller' => $request->id_seller])->first();
     }
+
+    /**
+     * Get best available provision by idProduct and quantity given
+     * @param $idProduct
+     * @param $quantity
+     * @return mixed
+     */
+    public static function getBestAvailableProvision($idProduct, $quantity){
+        return Product_Seller::where('id_product',$idProduct)->where('stock','>=', $quantity)->where('status',Product_Seller::active)->orderBy('amount', 'asc')->first();
+    }
+
+    public static function getPrices($idProduct, $idSeller){
+        return Product_Seller::where(['id_product' => $idProduct, 'id_seller' => $idSeller])->first();
+    }
+
+
 }

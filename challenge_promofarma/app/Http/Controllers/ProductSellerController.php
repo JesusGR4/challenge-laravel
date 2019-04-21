@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use App\Product_Seller;
-use App\Seller;
 use Illuminate\Http\Request;
 
 class ProductSellerController extends Controller
@@ -34,7 +32,7 @@ class ProductSellerController extends Controller
             'cost'   => $request->cost,
             'id_seller' => $request->id_seller,
             'id_product' => $request->id_product,
-            'status'   => true]);
+            'status'   => Product_Seller::active]);
 
         $product->save();
 
@@ -82,7 +80,7 @@ class ProductSellerController extends Controller
             return response()->json([
                 'message' => 'Provision does not exist, please create it'], 401);
         }
-        $productSeller->update(['status' => false]);
+        $productSeller->update(['status' => Product_Seller::disabled]);
 
         return response()->json(['message' =>
             'Successfully provision deleted']);

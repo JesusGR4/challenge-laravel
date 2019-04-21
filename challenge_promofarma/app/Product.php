@@ -12,7 +12,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'status'
+        'id_product', 'name', 'status'
     ];
 
     /**
@@ -21,6 +21,8 @@ class Product extends Model
      */
     protected $table = "products";
 
+    const disabled = 0;
+    const active = 1;
 
     /**
      * Set the real Primary key
@@ -40,7 +42,7 @@ class Product extends Model
      * @var string
      */
     public static function disableProduct($idProduct){
-        Product_Seller::where('id_product', $idProduct)->update(['status' => false]);
+        Product_Seller::where('id_product', $idProduct)->update(['status' => Product::disabled]);
     }
 
 }

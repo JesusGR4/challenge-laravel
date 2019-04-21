@@ -59,7 +59,7 @@ class Cart_Item extends Model
         }
         $cartItem->delete();
         return response()->json([
-            'message' => 'Item deleted'], 400);
+            'message' => 'Item deleted'], 200);
     }
 
 }

@@ -14,16 +14,21 @@ class SellerController extends Controller
      */
     public function create(Request $request){
 
-        $request->validate([ 'name'     => 'required|string',
-        ]);
+        try{
+            $request->validate([ 'name'     => 'required|string',
+            ]);
 
-        $user = new Seller(['name'     => $request->name,
-            'status'   => true]);
+            $user = new Seller(['name'     => $request->name,
+                'status'   => true]);
 
-        $user->save();
+            $user->save();
 
-        return response()->json([
-            'message' => 'Successfully seller created'], 200);
+            return response()->json([
+                'message' => 'Successfully seller created'], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' =>
+                'We found the following error: '.$e->getMessage()], 401);
+        }
     }
 
     /**
@@ -33,24 +38,29 @@ class SellerController extends Controller
      */
     public function update(Request $request){
 
-        $request->validate([
-            'name'       => 'string',
-        ]);
+        try{
+            $request->validate([
+                'name'       => 'string',
+            ]);
 
-        if(!$request->has('id_seller')){
-            return response()->json([
-                'message' => 'Id seller needed'], 401);
+            if(!$request->has('id_seller')){
+                return response()->json([
+                    'message' => 'Id seller needed'], 401);
+            }
+
+            $seller = Seller::find($request->id_seller);
+            if(!$seller){
+                return response()->json([
+                    'message' => 'Seller not found'], 401);
+            }
+            $seller->update($request->all());
+
+            return response()->json(['message' =>
+                'Successfully user update'], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' =>
+                'We found the following error: '.$e->getMessage()], 500);
         }
-
-        $seller = Seller::find($request->id_seller);
-        if(!$seller){
-            return response()->json([
-                'message' => 'Seller not found'], 401);
-        }
-        $seller->update($request->all());
-
-        return response()->json(['message' =>
-            'Successfully user update']);
     }
 
     /**
@@ -59,20 +69,25 @@ class SellerController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(Request $request){
-        if(!$request->has('id_seller')){
+        try{
+            if(!$request->has('id_seller')){
+                return response()->json([
+                    'message' => 'Id seller needed'], 401);
+            }
+            $idSeller = $request->id_seller;
+            $seller = Seller::find($idSeller);
+            if(!$seller){
+                return response()->json([
+                    'message' => 'Seller not found'], 401);
+            }
+            $seller->update(['status' => Seller::disabled]);
+            Seller::disableSeller($idSeller);
             return response()->json([
-                'message' => 'Id seller needed'], 401);
+                'message' => 'Seller disabled'], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' =>
+                'We found the following error: '.$e->getMessage()], 500);
         }
-        $idSeller = $request->id_seller;
-        $seller = Seller::find($idSeller);
-        if(!$seller){
-            return response()->json([
-                'message' => 'Seller not found'], 401);
-        }
-        $seller->update(['status' => Seller::disabled]);
-        Seller::disableSeller($idSeller);
-        return response()->json([
-            'message' => 'Seller disabled'], 400);
     }
 
 }

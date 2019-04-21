@@ -14,20 +14,25 @@ class UserController extends Controller
      */
     public function signup(Request $request){
 
-        $request->validate([ 'name'     => 'required|string',
-            'email'    => 'required|string|email|unique:users',
-            'password' => 'required|string',
-        ]);
+        try{
+            $request->validate([ 'name'     => 'required|string',
+                'email'    => 'required|string|email|unique:users',
+                'password' => 'required|string',
+            ]);
 
-        $user = new User(['name'     => $request->name,
-            'email'    => $request->email,
-            'password' => bcrypt($request->password),
-            'status'   => User::active]);
+            $user = new User(['name'     => $request->name,
+                'email'    => $request->email,
+                'password' => bcrypt($request->password),
+                'status'   => User::active]);
 
-        $user->save();
+            $user->save();
 
-        return response()->json([
-            'message' => 'Usuario creado correctamente'], 200);
+            return response()->json([
+                'message' => 'Usuario creado correctamente'], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' =>
+                'We found the following error: '.$e->getMessage()], 500);
+        }
     }
 
 
@@ -37,23 +42,33 @@ class UserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request){
-        $request->validate([
-            'email'       => 'string|email',
-            'password'    => 'string',
-        ]);
-        $user = Auth::user();
+        try{
+            $request->validate([
+                'email'       => 'string|email',
+                'password'    => 'string',
+            ]);
+            $user = Auth::user();
 
-        $user->update($request->all());
-        return response()->json(['message' =>
-            'Successfully user update']);
+            $user->update($request->all());
+            return response()->json(['message' =>
+                'Successfully user update'], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' =>
+                'We found the following error: '.$e->getMessage()], 500);
+        }
     }
 
     public function delete(Request $request){
-        $user = Auth::user();
-        $user->update(['status' => User::disabled]);
+        try{
+            $user = Auth::user();
+            $user->update(['status' => User::disabled]);
 
-        return response()->json(['message' =>
-            'Usuario correctamente borrado']);
+            return response()->json(['message' =>
+                'Usuario correctamente borrado'], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' =>
+                'We found the following error: '.$e->getMessage()], 500);
+        }
     }
 
 

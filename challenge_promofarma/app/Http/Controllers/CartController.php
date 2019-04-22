@@ -133,4 +133,37 @@ class CartController extends Controller
         }
     }
 
+
+    /**
+     * Get amount by seller
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSellerAmount(Request $request){
+        try{
+            $data = Cart::getCostSeller();
+            return response()->json([
+                'data' => $data], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' =>
+                'We found the following error: '.$e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Get amount of the cart
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAmountCart(Request $request){
+        try{
+            $data['total_amount'] = Cart::getAmountCart();
+            return response()->json([
+                'data' => $data], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' =>
+                'We found the following error: '.$e->getMessage()], 500);
+        }
+    }
+
 }

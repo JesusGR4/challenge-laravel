@@ -92,6 +92,12 @@ class Product_Seller extends Model
         return Product_Seller::where(['id_product' => $idProduct, 'id_seller' => $idSeller])->first();
     }
 
+    /**
+     * Reduce stock of product_seller when items is sold
+     * @param $idProduct
+     * @param $idSeller
+     * @param $quantity
+     */
     public static function reduceStock($idProduct, $idSeller, $quantity){
         Product_Seller::where(['id_product' => $idProduct, 'id_seller' => $idSeller])->decrement('stock', $quantity);
     }

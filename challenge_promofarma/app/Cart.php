@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Cart extends Model
 {
@@ -76,5 +77,45 @@ class Cart extends Model
                 'message' => 'Product not found'], 401);
         }
         return true;
+    }
+
+    /**
+     * Get total amount of the cart
+     * @return float|int
+     */
+    public static function getAmountCart(){
+        $user = Auth::user();
+        $idUser = $user->id;
+        $cart = Cart::getCurrentCart($idUser);
+        $cartItems = $cart->cartItems()->get();
+        $amount = 0.0;
+        foreach($cartItems as $cartItem){
+            $idProduct = $cartItem->id_product;
+            $idSeller = $cartItem->id_seller;
+            $provisionInfo = Product_Seller::getPrices($idProduct, $idSeller);
+            $amount += $provisionInfo['amount']*$cartItem->quantity;
+        }
+        return $amount;
+    }
+
+    /**
+     * Get total cost of cart by seller
+     * @return array
+     */
+    public static function getCostSeller(){
+        $user = Auth::user();
+        $idUser = $user->id;
+        $cart = Cart::getCurrentCart($idUser);
+        $cartItems = $cart->cartItems()->get();
+        $data = array();
+        foreach($cartItems as $cartItem){
+            $idProduct = $cartItem->id_product;
+            $idSeller = $cartItem->id_seller;
+            $provisionInfo = Product_Seller::getPrices($idProduct, $idSeller);
+            $data[$idSeller][$idProduct]['id_product'] = $idProduct;
+            $data[$idSeller][$idProduct]['id_seller'] = $idSeller;
+            @$data[$idSeller][$idProduct]['cost'] += $provisionInfo['cost']*$cartItem->quantity;;
+        }
+        return $data;
     }
 }

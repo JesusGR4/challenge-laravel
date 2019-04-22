@@ -33,9 +33,9 @@ Route::group(['prefix' => 'cart'], function () {
         Route::post('updateQuantity' , 'CartController@updateQuantity');
         Route::post('deleteProduct' , 'CartController@deleteProduct');
         Route::post('deleteCart', 'CartController@deleteCart');
-        Route::post('getSellerAmount','CartController@getSellerAmount');
-        Route::post('getAmountCart', 'CartController@getAmountCart');
-        Route::post('commitBuy', 'CartController@commitBuy');
+        Route::get('getSellerAmount','CartController@getSellerAmount');
+        Route::get('getAmountCart', 'CartController@getAmountCart');
+        Route::get('commitBuy', 'CartController@commitBuy');
     });
 });
 Route::group(['prefix' => 'order'], function () {

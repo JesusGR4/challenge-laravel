@@ -58,6 +58,11 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Set user status as disabled
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete(Request $request){
         try{
             $user = Auth::user();

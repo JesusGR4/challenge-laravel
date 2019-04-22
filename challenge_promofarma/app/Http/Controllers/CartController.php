@@ -121,7 +121,7 @@ class CartController extends Controller
 
             $idOrder = $order->id_order;
 
-            Order::insertOrderItems($idOrder, $idUser, $cart->cartItems()->get());
+            Order::insertOrderItems($idOrder, $cart->cartItems()->get());
 
             // Set cart to active
             $cart->update(['status' => Cart::commited]);

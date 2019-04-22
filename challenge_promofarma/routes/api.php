@@ -37,7 +37,12 @@ Route::group(['prefix' => 'cart'], function () {
         Route::post('getAmountCart', 'CartController@getAmountCart');
         Route::post('commitBuy', 'CartController@commitBuy');
     });
-
+});
+Route::group(['prefix' => 'order'], function () {
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('getOrders' , 'OrderController@getOrders');
+        Route::get('getSpentMoney' , 'OrderController@getSpentMoney');
+    });
 });
 
 Route::group(['prefix' => 'seller'], function(){

@@ -82,8 +82,18 @@ class Product_Seller extends Model
         return Product_Seller::where('id_product',$idProduct)->where('stock','>=', $quantity)->where('status',Product_Seller::active)->orderBy('amount', 'asc')->first();
     }
 
+    /**
+     * Get provision info by id_product and id_seller given
+     * @param $idProduct
+     * @param $idSeller
+     * @return mixed
+     */
     public static function getPrices($idProduct, $idSeller){
         return Product_Seller::where(['id_product' => $idProduct, 'id_seller' => $idSeller])->first();
+    }
+
+    public static function reduceStock($idProduct, $idSeller, $quantity){
+        Product_Seller::where(['id_product' => $idProduct, 'id_seller' => $idSeller])->decrement('stock', $quantity);
     }
 
 

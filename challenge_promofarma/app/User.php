@@ -51,6 +51,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Cart', 'id_cart');
     }
 
+    public function orders(){
+        return $this->hasMany('App\Order', 'id_order');
+    }
+
     /**
      * Check if user is active
      * @return bool

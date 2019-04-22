@@ -13,6 +13,53 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'auth'], function () {
+
+    // AUTH
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'UserController@signup');
+
+    // LOGGED CONTROLLERS
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('logout', 'AuthController@logout');
+        Route::post('update', 'UserController@update');
+        Route::get('delete', 'UserController@delete');
+    });
+});
+Route::group(['prefix' => 'cart'], function () {
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::post('updateQuantity' , 'CartController@updateQuantity');
+        Route::post('deleteProduct' , 'CartController@deleteProduct');
+        Route::get('deleteCart', 'CartController@deleteCart');
+        Route::get('getSellerAmount','CartController@getSellerAmount');
+        Route::get('getAmountCart', 'CartController@getAmountCart');
+        Route::get('commitBuy', 'CartController@commitBuy');
+    });
+});
+Route::group(['prefix' => 'order'], function () {
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('getOrders' , 'OrderController@getOrders');
+        Route::get('getSpentMoney' , 'OrderController@getSpentMoney');
+    });
+});
+
+Route::group(['prefix' => 'seller'], function(){
+    // SELLER
+    Route::post('create', 'SellerController@create');
+    Route::post('update', 'SellerController@update');
+    Route::post('delete', 'SellerController@delete');
+});
+
+Route::group(['prefix' => 'product'], function(){
+    // SELLER
+    Route::post('create', 'ProductController@create');
+    Route::post('update', 'ProductController@update');
+    Route::post('delete', 'ProductController@delete');
+});
+
+Route::group(['prefix' => 'provision'], function(){
+    // SELLER
+    Route::post('create', 'ProductSellerController@create');
+    Route::post('update', 'ProductSellerController@update');
+    Route::post('delete', 'ProductSellerController@delete');
 });

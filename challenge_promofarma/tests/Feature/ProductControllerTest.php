@@ -9,7 +9,6 @@ use Tests\TestCase;
 class ProductControllerTest extends TestCase
 {
 
-
     /**
      * Test fail method with no name
      */

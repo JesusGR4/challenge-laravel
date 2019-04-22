@@ -19,8 +19,6 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'UserController@signup');
 
-
-
     // LOGGED CONTROLLERS
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'AuthController@logout');

@@ -30,7 +30,7 @@ Route::group(['prefix' => 'cart'], function () {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::post('updateQuantity' , 'CartController@updateQuantity');
         Route::post('deleteProduct' , 'CartController@deleteProduct');
-        Route::post('deleteCart', 'CartController@deleteCart');
+        Route::get('deleteCart', 'CartController@deleteCart');
         Route::get('getSellerAmount','CartController@getSellerAmount');
         Route::get('getAmountCart', 'CartController@getAmountCart');
         Route::get('commitBuy', 'CartController@commitBuy');

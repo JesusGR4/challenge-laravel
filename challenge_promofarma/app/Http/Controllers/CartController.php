@@ -116,12 +116,15 @@ class CartController extends Controller
             $user = Auth::user();
             $idUser = $user->id;
             $cart = Cart::getCurrentCart($idUser);
+            $cartItems = $cart->cartItems();
+            if($cartItems->count() == 0) return response()->json([
+                'message' => 'Cart empty'], 401);
             $order = new Order(['id_user' =>$idUser]);
             $order->save();
 
             $idOrder = $order->id_order;
 
-            Order::insertOrderItems($idOrder, $cart->cartItems()->get());
+            Order::insertOrderItems($idOrder, $cartItems->get());
 
             // Set cart to active
             $cart->update(['status' => Cart::commited]);

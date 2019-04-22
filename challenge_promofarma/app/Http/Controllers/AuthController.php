@@ -24,12 +24,12 @@ class AuthController extends Controller
             $credentials = request(['email', 'password']);
             if (!Auth::attempt($credentials)) {
                 return response()->json([
-                    'message' => 'Unauthorized'], 500);
+                    'message' => 'Unauthorized'], 401);
             }
             $user = $request->user();
             if(!$user->userAvailable()){
                 return response()->json([
-                    'message' => 'Unauthorized'], 500);
+                    'message' => 'Unauthorized'], 401);
             }
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;

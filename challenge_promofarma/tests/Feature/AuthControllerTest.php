@@ -29,7 +29,7 @@ class AuthControllerTest extends TestCase
      */
     public function  testDisableUser(){
         $response = $this->json('POST','/api/auth/login',
-            ['email' => 'jesus.garcia@miscota.com', 'password' => 'asdfasdf', 'remember_me' => true]);
+            ['email' => 'jesus.garcia@pcrg.eu', 'password' => 'asdfasdf', 'remember_me' => true]);
         $response->assertStatus(401);
     }
 

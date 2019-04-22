@@ -44,6 +44,7 @@ class UserController extends Controller
     public function update(Request $request){
         try{
             $request->validate([
+                'name'        => 'string',
                 'email'       => 'string|email',
                 'password'    => 'string',
             ]);

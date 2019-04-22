@@ -21,13 +21,13 @@ class UsersTableSeeder extends Seeder
             'name' => 'Usuario 2',
             'email' => 'jesus.garcia@pcrg.eu',
             'password' => bcrypt('asdfasdf'),
-            'status' => true
+            'status' => false
         ]);
         \Illuminate\Support\Facades\DB::table('users')->insert([
             'name' => 'Usuario 3',
             'email' => 'jesus.garcia@miscota.com',
             'password' => bcrypt('asdfasdf'),
-            'status' => false
+            'status' => true
         ]);
     }
 }

@@ -33,7 +33,10 @@ We are going to use Homestead, a development environment ready for developing PH
 You must follow the instructions provided by Laravel Docu -> https://laravel.com/docs/5.8/homestead#installation-and-setup , just First steps sections (Installing The Homestead Vagrant Box & Installing Homestead)
 
 Now, let's take a look to ~/Homestead/Homestead.yaml:
-1. Change ip to --> ip: "192.168.10.10"
+1. Change ip to --> 
+
+`ip: "192.168.10.10"`
+
 2. Add the following to folders section -->
 
 
@@ -77,9 +80,11 @@ Now you will be in Homestead virtual environment :D
 `php artisan passport:install` Create encryption keys
 
 ## Workflow
+
 We need to use Postman for this API Calls:
 
 ### Sign up
+
 - (POST) 192.168.10.10/api/auth/signup 
 
 Parameters: 
@@ -87,7 +92,9 @@ Parameters:
 {name, email, password}
 
 Response expected: 'Usuario creado correctamente' (200)
+
 ### Login
+
 - (POST) 192.168.10.10/api/auth/login 
 
 Parameters: 

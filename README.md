@@ -40,7 +40,7 @@ Now, let's take a look to ~/Homestead/Homestead.yaml:
 2. Add the following to folders section -->
 
 
-`- map: /whereRepoHasBeenCloned`
+`- map: /whereRepoHasBeenCloned/challenge_promofarma/`
 
    `to: /home/vagrant/code`
 
@@ -59,6 +59,10 @@ Run the following where Homestead folder is:
 
 `vagrant up`
 
+If you have some problems with keys:
+
+`ssh-keygen -t rsa -b 4096 -C "$yourEmail"`
+
 Then run:
 
 `vagrant ssh`
@@ -66,6 +70,8 @@ Then run:
 Now you will be in Homestead virtual environment :D
 
 ### Setting up
+
+`cd code/public`
 
 `composer update` Install dependencies
 
@@ -78,6 +84,13 @@ Now you will be in Homestead virtual environment :D
 `php artisan db:seed` Populate database
 
 `php artisan passport:install` Create encryption keys
+
+### Hosts
+
+Add to your host the following:
+
+`192.168.10.10 challenge.com`
+
 
 ## Workflow
 
